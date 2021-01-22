@@ -1,6 +1,7 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/ModuleLength
+# rubocop:disable Metrics/MethodLength
 
 module Enumerable
   def my_each
@@ -107,7 +108,6 @@ module Enumerable
     my_each { |element| result << yield(element) } if proc.nil?
     result
   end
-  my_proc = proc { |i| i * i }
 
   def my_inject(number = nil, symbol = nil)
     if !block_given? && number.nil? && symbol.nil?
