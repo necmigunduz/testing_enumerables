@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/ModuleLength
@@ -13,22 +15,21 @@ module Enumerable
 
   def my_each_with_index
     return to_enum unless block_given?
-   
-    arr = self.to_a
-    arr.my_each { |index| yield(arr[index],index) }
+
+    arr = to_a
+    arr.my_each { |index| yield(arr[index], index) }
     self
   end
 
   def my_select
     if block_given?
-      arr = Array.new
+      arr = []
       my_each { |element| arr.push(element) if yield(element) }
       arr
     else
       to_enum(:my_select)
     end
   end
-
 
   def my_all?(argm = nil)
     if block_given?
@@ -111,7 +112,9 @@ module Enumerable
   my_proc = proc { |i| i * i }
 
   def my_inject(number = nil, symbol = nil)
-    return raise LocalJumpError, 'no block given' if !block_given? and number.nil? and symbol.nil?
+    if !block_given? && number.nil? && symbol.nil?
+      return raise LocalJumpError, 'no block given'
+    end
 
     if block_given?
       accum = number
@@ -134,7 +137,7 @@ module Enumerable
     end
   end
 
- p  [2, 2, 3, 2].my_inject(:+)
+  p [2, 2, 3, 2].my_inject(:+)
   def my_map_proc
     arr = []
     if block_given?
