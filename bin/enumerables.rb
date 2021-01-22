@@ -110,9 +110,7 @@ module Enumerable
   end
 
   def my_inject(number = nil, symbol = nil)
-    if !block_given? && number.nil? && symbol.nil?
-      return raise LocalJumpError, 'no block given'
-    end
+    return raise LocalJumpError, 'no block given' if !block_given? && number.nil? && symbol.nil?
 
     if block_given?
       accum = number
